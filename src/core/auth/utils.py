@@ -9,11 +9,11 @@ def make_password_hash(password: str) -> str:
     return hashed.decode()
 
 
-def is_password_equal_with_hash(*, password: str, hashed: str):
-    return bcrypt.checkpw(password.encode(), hashed.encode())
+def verify_password(*, plain_password: str, hashed: str) -> bool:
+    return bcrypt.checkpw(plain_password.encode(), hashed.encode())
 
 
-def create_jwt_token(payload: dict, secret_key: str, algorithm: str):
+def create_jwt_token(payload: dict, secret_key: str, algorithm: str) -> str:
     payload.update({
         'iat': datetime.utcnow(),
         'exp': datetime.utcnow() + timedelta(days=1)

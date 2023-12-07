@@ -1,4 +1,6 @@
-# jwt_auth
+# JWT auth with FastAPI
+
+---
 
 ### Create migration
 ```
@@ -9,3 +11,6 @@ alembic revision --autogenerate -m 'Create user table'
 ```
 alembic upgrade head
 ```
+
+### Links
+* [Check JWT tokens](https://jwt.io/)

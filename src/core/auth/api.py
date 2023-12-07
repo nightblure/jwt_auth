@@ -16,7 +16,7 @@ auth_router = APIRouter(prefix='/auth', tags=['auth'])
 
 @auth_router.post(
     '/register',
-    responses={409: {"model": UserAlreadyRegisteredErrorResponse}},  # for swagger
+    responses={409: {"model": UserAlreadyRegisteredErrorResponse}},
     status_code=status.HTTP_201_CREATED
 )
 def register(register_data: RegisterData, service: AuthService = Depends(get_auth_service)):
@@ -33,5 +33,4 @@ def register(register_data: RegisterData, service: AuthService = Depends(get_aut
     response_model=LoginResponse
 )
 def login(login_data: LoginData, service: AuthService = Depends(get_auth_service)):
-    token = service.login(login_data)
-    return {'access_token': token}
+    return {'access_token': service.login(login_data)}

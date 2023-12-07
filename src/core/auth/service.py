@@ -1,10 +1,11 @@
 from datetime import datetime
 
 from src.core.auth.exceptions import UserAlreadyRegisteredError, UserNotFoundError, InvalidCredentialsError
-from src.core.auth.schemas import RegisterData, UserCreateModel, LoginData, UserModel, AuthorizedUser
-from src.core.auth.utils import make_password_hash, create_jwt_token, is_password_equal_with_hash, decode_jwt_token
+from src.core.auth.schemas import RegisterData, LoginData
+from src.core.auth.utils import make_password_hash, create_jwt_token, verify_password, decode_jwt_token
 from src.core.config import Config
 from src.users.repository import UserRepository
+from src.users.schemas import UserCreateModel, UserModel, AuthorizedUser
 
 
 class AuthService:
@@ -14,7 +15,7 @@ class AuthService:
         self.secret_key = settings.jwt_secret
         self.jwt_algorithm = settings.jwt_algorithm
 
-    def register(self, data: RegisterData):
+    def register(self, data: RegisterData) -> None:
         user = self.user_repository.one_or_none(field='email', value=data.email)
 
         if user is not None:
@@ -35,7 +36,7 @@ class AuthService:
 
         user = UserModel.model_validate(db_user)
 
-        if not is_password_equal_with_hash(password=login_data.password, hashed=user.hashed_password):
+        if not verify_password(plain_password=login_data.password, hashed=user.hashed_password):
             raise InvalidCredentialsError(status_code=401)
 
         payload = {

@@ -2,6 +2,7 @@ from contextlib import contextmanager
 from typing import Annotated
 
 from fastapi import Depends
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 
 from src.core.auth.service import AuthService
@@ -37,5 +38,8 @@ def get_auth_service(user_repository=Depends(get_user_repository)):
     return AuthService(user_repository=user_repository, settings=get_settings())
 
 
-def current_user():
-    pass
+def current_user(
+        auth_service: AuthService = Depends(get_auth_service),
+        credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer())
+):
+    return auth_service.get_current_user(credentials.credentials)

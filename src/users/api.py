@@ -1,18 +1,11 @@
-from fastapi import APIRouter, Depends, Request
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi import APIRouter, Depends
 
-from src.core.auth.schemas import UserModel, AuthorizedUser
-from src.core.auth.service import AuthService
-from src.deps import current_user, get_auth_service
+from src.deps import current_user
+from src.users.schemas import AuthorizedUser
 
 users_router = APIRouter(prefix='/users', tags=['users'])
 
 
-# user: UserModel = Depends(current_user)
 @users_router.get('/me', response_model=AuthorizedUser)
-def me(
-        credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer()),
-        auth_service: AuthService = Depends(get_auth_service)
-):
-    user = auth_service.get_current_user(credentials.credentials)
+def me(user: AuthorizedUser = Depends(current_user)):
     return user
