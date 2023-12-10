@@ -7,8 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DOCKER_REPOSITORY: nightblure
-      IMAGE_TAG: latest
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
     strategy:
       matrix:
@@ -35,4 +34,4 @@ jobs:
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          CODECOV_TOKEN: $CODECOV_TOKEN
