@@ -1,4 +1,6 @@
 [flake8]
-extend-ignore = E501,W291
+# extend-ignore = E501,W291
+max-line-length = 115
+exclude = .git,__pycache__,__init__.py,.mypy_cache,.pytest_cache
 per-file-ignores =
     src/migrations/env.py:F401
