@@ -13,6 +13,7 @@ class AuthService:
     def __init__(self, user_repository: UserRepository, settings: Config):
         self.user_repository = user_repository
         self.secret_key = settings.jwt_secret
+        self.seconds_to_expire = settings.seconds_to_expire
         self.jwt_algorithm = settings.jwt_algorithm
 
     def register(self, data: RegisterData) -> None:
@@ -32,12 +33,12 @@ class AuthService:
         db_user = self.user_repository.one_or_none(field='email', value=login_data.email)
 
         if db_user is None:
-            raise UserNotFoundError(status_code=404)
+            raise UserNotFoundError()
 
         user = UserModel.model_validate(db_user)
 
         if not verify_password(plain_password=login_data.password, hashed=user.hashed_password):
-            raise InvalidCredentialsError(status_code=401)
+            raise InvalidCredentialsError()
 
         payload = {
             'sub': user.id,
@@ -45,11 +46,16 @@ class AuthService:
             'username': user.username,
         }
 
-        return create_jwt_token(payload, self.secret_key, self.jwt_algorithm)
+        return create_jwt_token(
+            payload=payload,
+            secret_key=self.secret_key,
+            algorithm=self.jwt_algorithm,
+            seconds_to_expire=self.seconds_to_expire
+        )
 
     def get_current_user(self, token: str):
         payload: dict = decode_jwt_token(token, self.secret_key, self.jwt_algorithm)
-        username = payload['username']
-        email = payload['email']
+        user_id: str = payload['sub']
+        user = self.user_repository.one_or_none(value=user_id)
         logged_in = datetime.utcfromtimestamp(payload['iat']).strftime('%d-%m-%Y %H:%M:%S')
-        return AuthorizedUser(email=email, username=username, logged_in=logged_in)
+        return AuthorizedUser(email=user.email, username=user.username, logged_in=logged_in)

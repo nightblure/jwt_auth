@@ -9,12 +9,24 @@ class UserAlreadyRegisteredError(HTTPException):
 
 
 class UserNotFoundError(HTTPException):
-    def __init__(self, status_code):
+    def __init__(self, status_code=404):
         self.status_code = status_code
         self.detail = 'User not found'
 
 
 class InvalidCredentialsError(HTTPException):
-    def __init__(self, status_code):
+    def __init__(self, status_code=401):
         self.status_code = status_code
         self.detail = 'Invalid credentials'
+
+
+class InvalidTokenError(HTTPException):
+    def __init__(self, status_code=400):
+        self.status_code = status_code
+        self.detail = 'Invalid token'
+
+
+class ExpiredTokenError(HTTPException):
+    def __init__(self, status_code=401):
+        self.status_code = status_code
+        self.detail = 'The access token expired'

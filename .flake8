@@ -1,0 +1,4 @@
+[flake8]
+extend-ignore = E501,W291
+per-file-ignores =
+    src/migrations/env.py:F401

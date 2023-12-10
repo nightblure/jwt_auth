@@ -16,6 +16,7 @@ class Config(BaseSettings):
     db_url: str = DB_URL
     jwt_secret: str
     jwt_algorithm: str
+    seconds_to_expire: int
 
 
 app_settings = None

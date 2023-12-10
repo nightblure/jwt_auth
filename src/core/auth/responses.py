@@ -16,3 +16,11 @@ class InvalidCredentialsErrorResponse(BaseModel):
 
 class UserNotFoundErrorResponse(BaseModel):
     detail: str = 'User not found'
+
+
+class InvalidTokenErrorResponse(BaseModel):
+    detail: str = 'Invalid token'
+
+
+class ExpiredTokenErrorResponse(BaseModel):
+    detail: str = 'The access token expired'
