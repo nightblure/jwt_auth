@@ -17,7 +17,7 @@ alembic upgrade head
 
 ### Run tests
 ```
-pytest --cov=src
+pytest -rA --cov=src
 ```
 
 ### Links

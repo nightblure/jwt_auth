@@ -15,4 +15,4 @@ class User(Base):
     id = Column(String, default=gen_uuid, primary_key=True)  # sqlite has no uuid type
     email = Column(String, unique=True)
     username = Column(String, nullable=False)
-    hashed_password = Column(String)
+    hashed_password = Column(String, nullable=False)

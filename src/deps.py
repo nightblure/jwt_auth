@@ -7,11 +7,12 @@ from sqlalchemy.orm import Session
 
 from src.core.auth.service import AuthService
 from src.core.config import get_settings
-from src.core.db.db import SessionLocal
+from src.core.db.db import get_sessionmaker
 from src.users.repository import UserRepository
 
 
 def get_db_session() -> Session:
+    SessionLocal = get_sessionmaker(get_settings().db_url)
     session = SessionLocal()
     try:
         yield session

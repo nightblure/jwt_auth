@@ -1,0 +1,9 @@
+[run]
+omit =
+    src/migrations/*
+    src/app.py
+    src/run.py
+    src/base_repository.py
+    src/core/auth/exceptions.py
+    src/core/auth/responses.py
+    *__init__.py*

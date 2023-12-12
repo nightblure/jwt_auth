@@ -1,13 +1,14 @@
+import os
 from logging.config import fileConfig
 
+from alembic import context
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-
-from alembic import context
 
 from src.core.config import get_settings
 from src.core.db.db import Base
 from src.users.models import User
+from tests.config import get_test_settings
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -19,7 +20,8 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 target_metadata = Base.metadata
-settings = get_settings()
+settings = get_settings() if not os.environ.get('TEST_MODE') else get_test_settings()
+print(settings.db_url)
 config.set_main_option('sqlalchemy.url', settings.db_url)
 
 
