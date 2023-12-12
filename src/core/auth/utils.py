@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 import bcrypt
 import jwt
 
-from jwt.exceptions import ExpiredSignatureError, InvalidSignatureError
+from jwt.exceptions import ExpiredSignatureError, InvalidSignatureError, DecodeError
 
 from src.core.auth.exceptions import ExpiredTokenError, InvalidTokenError
 
@@ -32,5 +32,5 @@ def decode_jwt_token(token: str, secret_key: str, algorithm: str) -> dict:
         return jwt.decode(token, secret_key, algorithms=algorithm)
     except ExpiredSignatureError:
         raise ExpiredTokenError()
-    except InvalidSignatureError:
+    except (DecodeError, InvalidSignatureError):
         raise InvalidTokenError()

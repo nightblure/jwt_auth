@@ -17,9 +17,3 @@ def existed_user_register_data():
         'username': 'existed_user',
         'password': 'Qwerty123!'
     }
-
-
-@pytest.fixture()
-def existed_user_login_data(existed_user_register_data):
-    existed_user_register_data.pop('username')
-    return existed_user_register_data
