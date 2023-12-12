@@ -6,9 +6,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
     strategy:
       matrix:
         python-version: ['3.10', '3.11']
@@ -36,4 +33,4 @@ jobs:
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         env:
-          CODECOV_TOKEN: $CODECOV_TOKEN
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
