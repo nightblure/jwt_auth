@@ -29,7 +29,7 @@ def test_decode_jwt_token_invalid():
         payload={'sub': 'test_user'},
         secret_key=secret_key,
         algorithm=algorithm,
-        seconds_to_expire=1
+        seconds_to_expire=60
     )
 
     with pytest.raises(InvalidTokenError):
