@@ -22,3 +22,17 @@ def test_login_success(api_client, existed_user_login_data):
 def test_login_user_not_found(api_client):
     response = api_client.post('/auth/login', json={'email': 'sr23r23@gmail.com', 'password': '1234tydf'})
     assert response.status_code == 404
+
+
+def test_login_with_incorrect_password(api_client, existed_user_login_data):
+    existed_user_login_data['password'] = 'sdf2frnd'
+    response = api_client.post('/auth/login', json=existed_user_login_data)
+    assert response.status_code == 401
+
+
+def test_current_user_success(api_client, existed_user_login_data):
+    response = api_client.post('/auth/login', json=existed_user_login_data)
+    access_token = response.json()['access_token']
+
+    response = api_client.get('/users/me', headers={'Authorization': f'Bearer {access_token}'})
+    assert response.status_code == 200

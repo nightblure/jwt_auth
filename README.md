@@ -17,7 +17,7 @@ alembic upgrade head
 
 ### Run tests
 ```
-pytest -rA --cov=src
+pytest -rA --cov-report term-missing --cov=src
 ```
 
 ### Links

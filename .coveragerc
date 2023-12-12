@@ -1,9 +1,10 @@
-[run]
+[report]
 omit =
-    src/migrations/*
-    src/app.py
     src/run.py
+    src/app.py
+    src/migrations/*
     src/base_repository.py
+    src/deps.py
     src/core/auth/exceptions.py
     src/core/auth/responses.py
     *__init__.py*
