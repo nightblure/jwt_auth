@@ -5,9 +5,21 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 SRC_DIR = Path(__file__).resolve().parent.parent
 ROOT_DIR = SRC_DIR.parent
-ENV_FILE = os.path.join(ROOT_DIR, '.env')
 
-DB_URL = f'sqlite:///{SRC_DIR}/db.db'
+APP_ENV_FILE = os.path.join(ROOT_DIR, '.env')
+APP_DB_URL = f'sqlite:///{SRC_DIR}/db.db'
+
+TESTS_DIR = os.path.join(ROOT_DIR, 'tests')
+TESTS_ENV_FILE = os.path.join(TESTS_DIR, '.env_test')
+TESTS_DB_URL = f'sqlite:///{TESTS_DIR}/db.db'
+TESTS_DB_PATH = os.path.join(TESTS_DIR, 'db.db')
+
+DB_URL = APP_DB_URL
+ENV_FILE = APP_ENV_FILE
+
+if os.environ.get('TEST_MODE') is not None:
+    DB_URL = TESTS_DB_URL
+    ENV_FILE = TESTS_ENV_FILE
 
 
 class Config(BaseSettings):
@@ -19,13 +31,5 @@ class Config(BaseSettings):
     seconds_to_expire: int
 
 
-app_settings = None
-
-
 def get_settings():
-    global app_settings
-
-    if app_settings is None:
-        app_settings = Config()
-
-    return app_settings
+    return Config()
