@@ -1,7 +1,7 @@
 # JWT auth with FastAPI
 
 [![build](https://github.com/nightblure/jwt_auth/actions/workflows/checks.yaml/badge.svg?branch=main)](https://github.com/nightblure/jwt_auth/actions/workflows/checks.yaml)
-[![codecov](https://codecov.io/gh/nightblure/jwt_auth/graph/badge.svg?token=meMno9YWrN)](https://codecov.io/gh/nightblure/jwt_auth)
+[![codecov](https://codecov.io/gh/nightblure/jwt_auth/branch/main/graph/badge.svg)](https://codecov.io/gh/{{REPOSITORY}})
 
 ---
 
