@@ -7,20 +7,20 @@ class UserAlreadyRegisteredErrorResponse(BaseModel):
 
 class LoginResponse(BaseModel):
     access_token: str
-    token_type: str = 'Bearer'
+    token_type: str = "Bearer"
 
 
 class InvalidCredentialsErrorResponse(BaseModel):
-    detail: str = 'Invalid user credentials'
+    detail: str = "Invalid user credentials"
 
 
 class UserNotFoundErrorResponse(BaseModel):
-    detail: str = 'User not found'
+    detail: str = "User not found"
 
 
 class InvalidTokenErrorResponse(BaseModel):
-    detail: str = 'Invalid token'
+    detail: str = "Invalid token"
 
 
 class ExpiredTokenErrorResponse(BaseModel):
-    detail: str = 'The access token expired'
+    detail: str = "The access token expired"

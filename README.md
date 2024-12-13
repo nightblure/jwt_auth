@@ -16,9 +16,6 @@ alembic upgrade head
 ```
 
 ### Run tests
+```bash
+make test
 ```
-pytest -rA --cov-report term-missing --cov=src
-```
-
-### Links
-* [Check JWT tokens](https://jwt.io/)

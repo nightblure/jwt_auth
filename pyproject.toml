@@ -1,0 +1,88 @@
+[project]
+name = "jwt-auth"
+version = "0.0.0"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "bcrypt==4.1.1",
+    "fastapi==0.115.6",
+    "pydantic-settings",
+    "pydantic",
+    "pyjwt==2.8.0",
+    "dependency-injector==4.44.0",
+    "sqlalchemy==2.0.23",
+    "uvicorn",
+    "alembic>=1.14.0",
+    "httpx>=0.28.1",
+    "deps-injection>=1.6.1",
+]
+
+[tool.uv]
+package = false
+dev-dependencies = [
+    "pytest==8.1.1",
+    "pytest-cov==5.0.0",
+    "pytest-asyncio==0.23.6",
+    "coverage==7.4.4",
+    "pre-commit==3.8.*",
+    "mypy>=1.13.0",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+pythonpath = ["src"]
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.coverage.run]
+omit = [
+    "tests/*",
+]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.ruff.lint]
+select = [
+       # RULES: https://docs.astral.sh/ruff/rules/
+    "A", # flake8-builtins
+    "B", # flake8-bugbear
+    "C", # flake8-comprehensions
+    "E", # pycodestyle errors
+    "G", # flake8-logging-format
+    "F", # pyflakes
+    "I", # isort
+    "N", # PEP8 naming
+    "S", # flake8-bandit
+    "W", # pycodestyle warnings
+    "T20", # flake8-print
+    "C4", # flake8-comprehensions
+    "EM", # flake8-errmsg
+    "UP", # pyupgrade
+    "PL", # Pylint
+    "PT", # flake8-pytest-style
+    "ISC", # flake8-implicit-str-concat
+    "ICN", # flake8-import-conventions
+    "ARG", # flake8-unused-arguments
+    "COM", # flake8-commas
+    "FBT", # flake8-boolean-trap
+    "LOG", # flake8-logging
+    "SIM", # flake8-simplify
+    "TRY", # tryceratops
+    "PIE", # flake8-pie
+    "RUF", # Ruff-specific rules
+    "ASYNC", # flake8-async
+]
+ignore = [
+    "S104",
+]
+
+[tool.ruff.lint.extend-per-file-ignores]
+"tests/**.py" = ["S101", "PLR2004", "S105", "S106"]
