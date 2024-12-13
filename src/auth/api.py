@@ -38,7 +38,7 @@ def register(
     },
     response_model=LoginResponse,
 )
-@inject
+@inject  # type: ignore[misc]
 def login(
     login_data: LoginData,
     auth_service: AuthServiceDep,

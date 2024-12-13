@@ -27,7 +27,7 @@ def app() -> FastAPI:
 
 
 @pytest.fixture(scope="session", autouse=True)
-def api_client(app: FastAPI) -> TestClient:
+def api_client(app: FastAPI) -> Iterator[TestClient]:
     with TestClient(app) as client:
         yield client
 

@@ -19,3 +19,11 @@ alembic upgrade head
 ```bash
 make test
 ```
+
+### Static analyze
+```bash
+make lint
+```
+```bash
+make mypy
+```
