@@ -1,6 +1,6 @@
-from src.base_repository import BaseSqlRepository
+from src.base_repository import BaseDAO
 from src.db.models import User
 
 
-class UserDAO(BaseSqlRepository[User]):
+class UserDAO(BaseDAO[User]):
     model = User

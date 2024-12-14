@@ -7,7 +7,7 @@ from sqlalchemy.orm import InstrumentedAttribute, Session
 T = TypeVar("T")
 
 
-class BaseSqlRepository(Generic[T]):
+class BaseDAO(Generic[T]):
     """Fluent interface wrapper above simple SQLAlchemy queries
     Examples:
         objs = repo.select('id').where(name='test').order_by('id', 'desc').all()
