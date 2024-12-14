@@ -5,9 +5,10 @@ from sqlalchemy import select
 from sqlalchemy.orm import InstrumentedAttribute, Session
 
 T = TypeVar("T")
+PT = TypeVar("PT", bound=BaseModel)
 
 
-class BaseDAO(Generic[T]):
+class BaseDAO(Generic[T, PT]):
     """Fluent interface wrapper above simple SQLAlchemy queries
     Examples:
         objs = repo.select('id').where(name='test').order_by('id', 'desc').all()
@@ -17,7 +18,8 @@ class BaseDAO(Generic[T]):
         objs = repo.where(id=230423).all()
     """
 
-    model: type[T] | None = None
+    model: type[T]
+    pydantic_model: type[PT]
 
     def __init__(self, db_session: Session):
         self.db_session = db_session
@@ -36,16 +38,21 @@ class BaseDAO(Generic[T]):
     def _get_field(self, name: str) -> InstrumentedAttribute[Any]:
         return self.field_name_to_orm_field[name]
 
-    def one_or_none(self, value: Any, field: str = "id") -> T | None:
+    def one_or_none(self, value: Any, field: str = "id") -> PT | None:
         id_field = self._get_field(field)
-        stmt = select(self.model).where(id_field == value)  # type: ignore[arg-type]
-        return self.db_session.execute(stmt).scalars().one_or_none()
+        stmt = select(self.model).where(id_field == value)
+        item = self.db_session.execute(stmt).scalars().one_or_none()
+
+        if item is None:
+            return None
+
+        return self.pydantic_model.model_validate(item, from_attributes=True)
 
     def create(self, data: dict[str, Any] | BaseModel) -> T:
         if isinstance(data, BaseModel):
             data = data.model_dump()
 
-        db_obj = self.model(**data)  # type: ignore[misc]
+        db_obj = self.model(**data)
         self.db_session.add(db_obj)
         return db_obj
 

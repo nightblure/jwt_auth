@@ -13,15 +13,6 @@ from src.di import di_container as _di_container
 
 
 @pytest.fixture(scope="session")
-def existed_user_db_data() -> dict[str, Any]:
-    return {
-        "email": "existed_user@gmail.com",
-        "username": "existed_user",
-        "hashed_password": "$2b$12$7ThkIvhfCKKN1XUVD6H7YOd5nBIEa4/gu2hRrYy/Wn3QY1b/ny02W",
-    }
-
-
-@pytest.fixture(scope="session")
 def app() -> FastAPI:
     return create_app()
 
@@ -59,7 +50,7 @@ def override_dependencies(
 
 
 @pytest.fixture(scope="session", autouse=True)
-def tests_lifespan(di_container: DIContainer, existed_user_db_data: dict[str, Any]) -> None:
+def tests_lifespan(di_container: DIContainer) -> None:
     db_session = di_container.db_session()
     meta = Base.metadata
 
@@ -68,6 +59,3 @@ def tests_lifespan(di_container: DIContainer, existed_user_db_data: dict[str, An
 
     db_session.commit()
     db_session.close()
-
-    user_dao = di_container.user_dao()
-    user_dao.create(existed_user_db_data)

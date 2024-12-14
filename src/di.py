@@ -24,15 +24,15 @@ class DIContainer(DeclarativeContainer):  # type: ignore[misc]
 
     session_factory = providers.Singleton(
         sessionmaker,
-        db_engine,
+        db_engine.cast,
         autocommit=False,
         autoflush=False,
     )
 
-    db_session = providers.Transient(
+    db_session = providers.Resource(
         db_session_resource,
-        session_factory,
-        # function_scope=True
+        session_factory=session_factory.cast,
+        function_scope=True,
     )
 
     user_dao = providers.Transient(
@@ -50,4 +50,5 @@ class DIContainer(DeclarativeContainer):  # type: ignore[misc]
 
 
 di_container: DIContainer = DIContainer()
+
 AuthServiceDep = Annotated[AuthService, Depends(Provide[di_container.auth_service])]

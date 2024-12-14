@@ -76,11 +76,7 @@ class AuthService:
         payload = decode_jwt_token(token=token, secret_key=self.secret_key, algorithm=self.jwt_algorithm)
 
         user_id: str = payload["sub"]
-        user = self.user_dao.one_or_none(value=user_id)
-
-        if user is None:
-            raise UserNotFoundError()
-
+        user: UserModel = self.user_dao.one_or_none(value=user_id)  # type: ignore[assignment]
         logged_in = datetime.fromtimestamp(payload["iat"]).strftime("%d-%m-%Y %H:%M:%S")
 
         return AuthorizedUser(

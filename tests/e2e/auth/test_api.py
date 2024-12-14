@@ -41,6 +41,7 @@ def test_login_fail_with_incorrect_password(api_client: TestClient, existed_user
 
 def test_me_success(api_client: TestClient, existed_user_register_data: dict[str, Any]) -> None:
     response = api_client.post("/auth/login", json=existed_user_register_data)
+    response.raise_for_status()
     access_token = response.json()["access_token"]
 
     response = api_client.get(
