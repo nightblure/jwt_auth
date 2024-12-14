@@ -6,4 +6,4 @@ lint:
 	pre-commit run --all-files
 
 mypy:
-	mypy src tests
+	mypy .
