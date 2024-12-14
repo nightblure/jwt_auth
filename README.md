@@ -2,7 +2,8 @@
 
 [![build](https://github.com/nightblure/jwt_auth/actions/workflows/checks.yaml/badge.svg?branch=main)](https://github.com/nightblure/jwt_auth/actions/workflows/checks.yaml)
 [![codecov](https://codecov.io/gh/nightblure/jwt_auth/branch/main/graph/badge.svg)](https://codecov.io/gh/{{REPOSITORY}})
-
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![MyPy Strict](https://img.shields.io/badge/mypy-strict-blue)](https://mypy.readthedocs.io/en/stable/getting_started.html#strict-mode-and-configuration)
 ---
 
 ### Create migration
